@@ -3,7 +3,7 @@
 	if(doc.__moxi_mo) return
 	let liveFns = new Set(), pending = false,
 	recompute = (evt)=>{
-		if (pending || ignore(evt.target)) return
+		if (pending || ignore(evt?.target)) return
 		pending = true
 		queueMicrotask(()=>{liveFns.forEach(f=>f()); setTimeout(()=>pending = false)})
 	}
