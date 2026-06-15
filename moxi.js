@@ -3,7 +3,7 @@
 	if(doc.__moxi_mo) return
 	let liveFns = new Set(), pending = false,
 	recompute = (evt)=>{
-		if (pending || (evt && ignore(evt.target))) return
+		if (pending || ignore(evt?.target)) return
 		pending = true
 		queueMicrotask(()=>{liveFns.forEach(f=>f()); setTimeout(()=>pending = false)})
 	}
@@ -17,7 +17,7 @@
 	DB = Symbol(),
 	mkDb = ()=>{let last = 0, j; return ms=>new Promise((r,rj)=>{j?.(DB); j = rj; let id = ++last; setTimeout(()=>id == last && (j = null, r()), ms)})},
 	mkWait = ctx=>x=>new Promise(r=>typeof x == "number" ? setTimeout(r,x) : el(ctx,x,r,{once:1})),
-	ignore = elt=>elt.closest("[mx-ignore]"),
+	ignore = elt=>elt?.closest("[mx-ignore]"),
 	one = x=>x?[x]:[],
 	POS = {before:"beforebegin",after:"afterend",start:"afterbegin",end:"beforeend"},
 	proxy = elts=>new Proxy({}, {
